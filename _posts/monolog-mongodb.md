@@ -1,5 +1,5 @@
 ---
-title: monolog & mongodb
+title: monolog & mongodb的强强联手
 date: 2017-03-22 22:55:29
 tags: [monolog,mongodb]
 ---
@@ -31,3 +31,8 @@ mongodb
 >the objects together, AKA what most people do in a web app), MongoDB would 
 >probably kick ass for you.
 
+
+```javascript
+var s = "javascript syntax";
+alert(s);
+``` 
