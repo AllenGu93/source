@@ -10,6 +10,8 @@ monolog和mongodb的强强联手
 monolog
 ==================
 
+!['monolog'](https://raw.githubusercontent.com/AllenGu93/imageForHexo/master/monolog-1.gif)
+
 >Monolog是php下比较全又容易扩展的记录日志类库。目前有包括Symfony 、Laravel、 CakePHP等诸多
 >知名php框架都内置了Monolog。Monolog可以把你的日志发送到文件，sockets，收件箱，数据库和各种
 >web services。
@@ -19,6 +21,7 @@ monolog
 
 mongodb
 =================
+!['mongodb'](https://raw.githubusercontent.com/AllenGu93/imageForHexo/master/mongo.png)
 
 >MongoDB is not a key/value store, it’s quite a bit more. It’s definitely not 
 >a RDBMS either. It seems to be very performant and either has.
@@ -32,7 +35,24 @@ mongodb
 >probably kick ass for you.
 
 
-```javascript
-var s = "javascript syntax";
-alert(s);
-``` 
+如何让他们强强联合？
+==================
+
+最重要的地方来了，既然mongodb和monolog是这么牛，拓展性一定不差，对！ 我们去monolog里看看，有没有能连接到mongodb的接口啥的......
+五分钟后......
+```php
+class MongoDBHandler extends AbstractProcessingHandler
+{
+    protected $mongoCollection;
+
+    public function __construct($mongo, $database, $collection, $level = Logger::DEBUG, $bubble = true)
+    {
+        if (!($mongo instanceof \MongoClient || $mongo instanceof \Mongo || $mongo instanceof \MongoDB\Client)) {
+            throw new \InvalidArgumentException('MongoClient, Mongo or MongoDB\Client instance required');
+        }
+
+        $this->mongoCollection = $mongo->selectCollection($database, $collection);
+
+        parent::__construct($level, $bubble);
+    }
+```
